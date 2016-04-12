@@ -1,0 +1,8 @@
+RANDOM string generation, RANDOM replacement:   ~8500 faults
+RANDOM string generation, FIFO replacement:     ~8500 faults
+LOOP string generation, FIFO replacement, STATIC size:	3594 faults.
+LOOP string generation, FIFO replacement, STATIC size:	3588 faults.
+LOOP string generation, FIFO replacement:       ~1990 faults
+LOOP string generation, FIFO replacement, STATIC size:       ~3450 faults
+LOOP string generation, RANDOM replacement:     ~1960 faults
+LOOP string generation, RANDOM replacement, STATIC size:     ~2480 faults
