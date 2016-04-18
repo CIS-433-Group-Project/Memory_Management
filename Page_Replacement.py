@@ -1,6 +1,7 @@
 from enum import Enum
 from collections import deque
 from random import choice
+from operator import itemgetter
 
 
 class Strategy(Enum):
@@ -49,8 +50,8 @@ class MemoryManager:
                     if self.strategy == Strategy.LRU:
                         ref_slice = ref[:position]
                         ref_slice.reverse()
-                        recent_page_positions = [ref_slice.index(i) for i in working_set]
-                        del working_set[max(recent_page_positions)]
+                        recent_page_positions = [(ref_slice.index(i), i) for i in working_set]
+                        working_set.remove(max(recent_page_positions, key=itemgetter(0))[1])
                 working_set.append(i)
             position += 1
         return total_faults

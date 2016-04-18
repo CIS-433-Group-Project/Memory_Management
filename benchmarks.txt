@@ -1,23 +1,9 @@
-RANDOM string generation, RANDOM replacement, STATIC size:	8003 faults.
-RANDOM string generation, RANDOM replacement, STATIC size:	8007 faults.
-RANDOM string generation, RANDOM replacement:   ~8500 faults
-RANDOM string generation, FIFO replacement:     ~8500 faults
-LOOP string generation, FIFO replacement, STATIC size:	2040 faults.
-LOOP string generation, FIFO replacement, STATIC size:	3599 faults.
-LOOP string generation, FIFO replacement, STATIC size:	3661 faults.
-LOOP string generation, FIFO replacement, STATIC size:	3618 faults.
-LOOP string generation, FIFO replacement, STATIC size:	3594 faults.
-LOOP string generation, FIFO replacement, STATIC size:	3588 faults.
-LOOP string generation, FIFO replacement:       ~1990 faults
-LOOP string generation, FIFO replacement, STATIC size:       ~3450 faults
-LOOP string generation, RANDOM replacement, STATIC size:	1941 faults.
-LOOP string generation, RANDOM replacement, STATIC size:	1855 faults.
-LOOP string generation, RANDOM replacement:     ~1960 faults
-LOOP string generation, RANDOM replacement, STATIC size:     ~2480 faults
-LOOP string generation, LRU replacement, STATIC size:	2098 faults.
-LOOP string generation, LRU replacement, STATIC size:	3502 faults.
-RANDOM string generation, LRU replacement, STATIC size:	8002 faults.
-RANDOM string generation, LRU replacement, STATIC size:	8004 faults.
-RANDOM string generation, LRU replacement, STATIC size:	9001 faults.
-AVERAGE string generation, RANDOM replacement, STATIC size:	7781 faults.
-AVERAGE string generation, RANDOM replacement, STATIC size:	1 faults.
+RANDOM string generation, RANDOM replacement, STATIC size (20 pages):	8080 faults.
+RANDOM string generation, RANDOM replacement, STATIC size (20 pages):	8080 faults.
+RANDOM string generation, RANDOM replacement, STATIC size (20 pages):	8090 faults.
+RANDOM string generation, RANDOM replacement, STATIC size (20 pages):	8087 faults.
+AVERAGE string generation, RANDOM replacement, STATIC size (20 pages):	7777 faults.
+AVERAGE string generation, RANDOM replacement, STATIC size (20 pages):	7777 faults.
+AVERAGE string generation, RANDOM replacement, STATIC size (20 pages):	7780 faults.
+AVERAGE string generation, RANDOM replacement, STATIC size (20 pages):	7774 faults.
+AVERAGE string generation, LRU replacement, STATIC size (20 pages):	7778 faults.

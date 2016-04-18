@@ -8,8 +8,11 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
     results = []
     start = time()
     dynamic = False
+    size = 20
+    good = 0
     for _ in range(TRIALS):
-        results.append(MemoryManager(s, 20, dynamic).handle_string(generate_list(b)))
+        r = MemoryManager(s, size, dynamic).handle_string(generate_list(b))
+        results.append(r)
     end = time()
     avg_time = (end - start)/TRIALS
     print('Average time: ', avg_time)
@@ -22,7 +25,7 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
     new_entry = b.name + " string generation, "
     new_entry += s.name + ' replacement'
     if not dynamic:
-        new_entry += ', STATIC size:'
+        new_entry += ', STATIC size ({0} pages):'.format(size)
     else:
         new_entry += ':'
     new_entry += '\t' + str(int(avg)) + ' faults.'
@@ -37,6 +40,6 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.AVERAGE, Strategy.RANDOM)
+    test_behavior_strategy(Behavior.AVERAGE, Strategy.LRU)
 
 
