@@ -4,12 +4,12 @@ from time import time
 
 
 def test_behavior_strategy(b: Behavior, s: Strategy):
-    TRIALS = 10**3
+    TRIALS = 10**2
     results = []
     start = time()
     dynamic = False
     for _ in range(TRIALS):
-        results.append(MemoryManager(s, 10, dynamic).handle_string(generate_list(b), 15))
+        results.append(MemoryManager(s, 20, dynamic).handle_string(generate_list(b)))
     end = time()
     avg_time = (end - start)/TRIALS
     print('Average time: ', avg_time)
@@ -37,6 +37,6 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.LOOP, Strategy.FIFO)
+    test_behavior_strategy(Behavior.LOOP, Strategy.RANDOM)
 
 
