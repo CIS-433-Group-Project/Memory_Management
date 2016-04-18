@@ -37,6 +37,6 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.LOOP, Strategy.RANDOM)
+    test_behavior_strategy(Behavior.AVERAGE, Strategy.RANDOM)
 
 

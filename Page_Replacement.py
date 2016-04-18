@@ -50,7 +50,7 @@ class MemoryManager:
                         ref_slice = ref[:position]
                         ref_slice.reverse()
                         recent_page_positions = [ref_slice.index(i) for i in working_set]
-                        del working_set[min(recent_page_positions)]
+                        del working_set[max(recent_page_positions)]
                 working_set.append(i)
             position += 1
         return total_faults
