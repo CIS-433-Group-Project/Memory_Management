@@ -10,7 +10,7 @@ The project has been written in Python3.5, available from www.python.org.  It ha
 python project, it does not need to be built or compiled to run, you just need a Python version installed on your
 system.
 
-## Classes
+## Modules
 ___
 ### Reference Strings
 The Reference_String.py module implements the creation of reference strings.  It defines a class to enumerate program
@@ -20,6 +20,12 @@ determine which behavior the reference string should have.  It returns a list of
 The main() method of Reference_String.py performs 100 trials to test assertions against entropy and to benchmark the
 function, and writes the final trial to a .txt file.  Behaviors and the filename are currently hard-coded and must be
 changed manually between tests.
+
+The following behaviors have been implemented:
+
+ * Random
+ * Extended Loop
+ * Average (follows 90/10 rule, no further constraints)
 
 ### Page Replacement
 The Page_Replacement.py class implements the page replacement strategies.  In a similar fashion to reference strings,
@@ -38,7 +44,9 @@ that list of pages with the parameters set in the class instance.
 Presently, the following algorithms have been implemented:
 
  * First-In-First-Out
-
  * Random
-
  * Least-Recently-Used
+
+### Driver
+The page_driver.py module performs a series of trials for a given Behavior and Strategy as defined by the Enums in each
+appropriate module.  It computes/records average data for the trials and appends it to the benchmarks.txt file.
