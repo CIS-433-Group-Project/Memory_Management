@@ -54,6 +54,17 @@ class MemoryManager:
                         # recent_page_positions = [(ref_slice.index(i), i) for i in working_set]
                         # working_set.remove(max(recent_page_positions, key=itemgetter(0))[1])
                         working_set.popleft()
+                    # Optimal page replacement - remove the page which will be used the farthest in the future from here.
+                    # Gets a slice of the rest of the reference string, creates a list of tuples containing the page number
+                    # and the next index within our reference string where that page appears.  The page number associated with
+                    # the largest index is the one we drop.
+                    if self.strategy == Strategy.OPTIMAL:
+                        ref_slice = ref[position:]
+                        future_positions = [(ref_slice.index(i), i) for i in working_set]
+                        future_positions = [(i, j) if i > 0 else (1 << 128, j) for i, j in future_positions]
+                        # this max returns a tuple, of which we only need the 2nd element, hence the indexing.
+                        furthest = max(future_positions, key=itemgetter(0))[1]
+                        working_set.remove(furthest)
                 working_set.append(i)
             elif self.strategy == Strategy.LRU:
                 working_set.remove(i)
