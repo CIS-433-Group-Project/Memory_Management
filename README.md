@@ -50,3 +50,8 @@ Presently, the following algorithms have been implemented:
 ### Driver
 The page_driver.py module performs a series of trials for a given Behavior and Strategy as defined by the Enums in each
 appropriate module.  It computes/records average data for the trials and appends it to the benchmarks.txt file.
+___
+### Results
+The benchmarks.csv file provided here contains some sample results.  Note that because the driver module performs a set
+of trials for each execution that each row in the results file represents an *average* result for a single *set* of
+trials.  Actual variance can be significant for different program behaviors and replacement strategies.
