@@ -58,24 +58,34 @@ def generate_list(behavior: Behavior, loop_len=None):
         if loop_len is None:
             loop_len = randint(3, 12)
         start = randint(0, RANGE)
+        # construct the loop
         loop = []
         for i in range(loop_len):
             loop.append(pages[(start + i) % len(pages)])
         loop_iterations = int(LENGTH*randint(7, 9)/10/len(loop))
+        # remove the pages in our loop from the set we'll use to construct the rest of the reference string
         for i in loop:
             pages.remove(i)
+        # decide on a starting position for the loop
         loop_start = randint(0, LENGTH - len(loop)*loop_iterations - 1)
+        # put the loop in place for however many iterations it will run.  Note that for the purposes of this
+        # this constructor, the reference string is double-ended - the loop is allowed to "begin" at the end and "end"
+        # at the beginning.
         for i in range(len(loop)*loop_iterations):
             ref[loop_start + i] = loop[i % len(loop)]
-        p = pages.copy()
-        for i in range(LENGTH):
-            if len(p) == 0:
-                p = pages.copy()
+        if ref[0] is None:
+            ref[0] = choice(pages)
+        for i in range(1, LENGTH):
             if ref[i] is None:
-                ref[i] = p.pop(randint(0, len(p)-1))
+                last = ref[i-1]
+                if last in pages:
+                    p = pages.copy()
+                    p.remove(last)
+                    ref[i] = choice(p)
+                else:
+                    ref[i] = choice(pages)
         assert set(pages).union(loop) == {i for i in range(RANGE+1)}
         assert loop_iterations*len(loop) + len(pages) <= LENGTH
-        assert all(i in ref for i in range(100))
     assert all(i is not None for i in ref)
     assert all(ref[i] != ref[i+1] for i in range(len(ref)-1))
     return ref
