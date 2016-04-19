@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import randint, choice, random
 from enum import Enum
 from time import time
 
@@ -35,27 +35,21 @@ def generate_list(behavior: Behavior, loop_len=None):
             working_set = {choice(ws) for _ in range(len(ws)//10)}
         working_set = list(working_set)
         leftovers = [i for i in ws if i not in working_set]
-        ninety = [i for i in ws]
-        for _ in range(len(ninety)):
-            pos = choice(ninety)
-            ninety.remove(pos)
-            while ref[pos] is None:
-                pick = choice(working_set)
-                if pos > 0:
-                    if ref[pos - 1] == pick:
-                        continue
-                if pos < LENGTH-1:
-                    if ref[pos + 1] == pick:
-                        continue
-                ref[pos] = pick
-        for i in range(len(ref)):
-            if ref[i] is None:
-                before = ref[i - 1] if i > 0 else -1
-                after = ref[i + 1] if i < len(ref) - 1 else -1
-                while ref[i] == before or ref[i] == after or not ref[i]:
+        ref[0] = choice(leftovers)
+        ref[-1] = choice(working_set)
+        for i in range(1, len(ref)-1):
+            placement = random()
+            before = ref[i - 1]
+            after = ref[i + 1]
+            while ref[i] == before or ref[i] == after or not ref[i]:
+                if placement > 0.9:
                     ref[i] = choice(leftovers)
+                else:
+                    ref[i] = choice(working_set)
         assert all(ref[i] != ref[i + 1] for i in range(len(ref) - 1))
         assert all(i is not None for i in ref)
+        uses = {i: sum([1 if i == j else 0 for j in ref]) for i in working_set}
+
         return ref
     # Implementation of Loop behavior.
     else:

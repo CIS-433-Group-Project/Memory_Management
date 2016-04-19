@@ -26,7 +26,8 @@ class MemoryManager:
         total_faults = 0
         working_set = deque()
         recent_faults = deque(maxlen=size_limit)
-        position = 0
+        start = 0
+        end = 0
         for i in ref:
             fault = i not in working_set
             recent_faults.append(fault)
@@ -48,18 +49,21 @@ class MemoryManager:
                     # LRU:  Remove the element which was least recently used - that is, the one which is farthest left
                     # in the reference string from this position.
                     if self.strategy == Strategy.LRU:
-                        ref_slice = ref[:position]
-                        ref_slice.reverse()
-                        recent_page_positions = [(ref_slice.index(i), i) for i in working_set]
-                        working_set.remove(max(recent_page_positions, key=itemgetter(0))[1])
+                        # ref_slice = ref[:position]
+                        # ref_slice.reverse()
+                        # recent_page_positions = [(ref_slice.index(i), i) for i in working_set]
+                        # working_set.remove(max(recent_page_positions, key=itemgetter(0))[1])
+                        working_set.popleft()
                 working_set.append(i)
-            position += 1
+            elif self.strategy == Strategy.LRU:
+                working_set.remove(i)
+                working_set.append(i)
         return total_faults
 
 
 if __name__ == '__main__':
-    m = MemoryManager(Strategy.LRU, 11, True)
+    m = MemoryManager(Strategy.LRU, 20)
     with open('test_string_loop.txt', 'r') as filein:
         test_ref = filein.read().split(', ')
-    print(m.handle_string(test_ref, 11))
+    print(m.handle_string(test_ref))
 
