@@ -36,20 +36,20 @@ def generate_list(behavior: Behavior, loop_len=None):
         working_set = list(working_set)
         leftovers = [i for i in ws if i not in working_set]
         ref[0] = choice(leftovers)
-        ref[-1] = choice(working_set)
-        for i in range(1, len(ref)-1):
+        for i in range(1, len(ref)):
             placement = random()
             before = ref[i - 1]
-            after = ref[i + 1]
-            while ref[i] == before or ref[i] == after or not ref[i]:
-                if placement > 0.9:
-                    ref[i] = choice(leftovers)
-                else:
-                    ref[i] = choice(working_set)
-        assert all(ref[i] != ref[i + 1] for i in range(len(ref) - 1))
-        assert all(i is not None for i in ref)
+            if placement > 0.9:
+                choices = leftovers.copy()
+            else:
+                choices = working_set.copy()
+            if before in choices:
+                choices.remove(before)
+            ref[i] = choice(choices)
         uses = {i: sum([1 if i == j else 0 for j in ref]) for i in working_set}
-
+        ninety = len(ref)*9/10
+        ten = len(ref)/10
+        assert ninety - ten < sum(i for i in uses.values()) < len(ref)
         return ref
     # Implementation of Loop behavior.
     else:
@@ -75,9 +75,9 @@ def generate_list(behavior: Behavior, loop_len=None):
                 ref[i] = p.pop(randint(0, len(p)-1))
         assert set(pages).union(loop) == {i for i in range(RANGE+1)}
         assert loop_iterations*len(loop) + len(pages) <= LENGTH
-        assert all(i is not None for i in ref)
         assert all(i in ref for i in range(100))
-        assert all(ref[i] != ref[i+1] for i in range(len(ref)-1))
+    assert all(i is not None for i in ref)
+    assert all(ref[i] != ref[i+1] for i in range(len(ref)-1))
     return ref
 
 

@@ -1,15 +1,15 @@
 from Page_Replacement import MemoryManager, Strategy
 from Reference_String import generate_list, Behavior
+from csv import DictReader, DictWriter
 from time import time
+from operator import itemgetter
 
 
-def test_behavior_strategy(b: Behavior, s: Strategy):
+def test_behavior_strategy(b: Behavior, s: Strategy, size=20):
     TRIALS = 10**2
     results = []
     start = time()
     dynamic = False
-    size = 20
-    good = 0
     for _ in range(TRIALS):
         r = MemoryManager(s, size, dynamic).handle_string(generate_list(b))
         results.append(r)
@@ -20,26 +20,18 @@ def test_behavior_strategy(b: Behavior, s: Strategy):
     print('Maximum no. page faults: ', max(results))
     avg = sum(results)/len(results)
     print('Average no. page faults: ', avg)
-    with open('benchmarks.txt', 'r') as record_file:
-        data = [line.strip() for line in record_file]
-    new_entry = b.name + " string generation, "
-    new_entry += s.name + ' replacement'
-    if not dynamic:
-        new_entry += ', STATIC size ({0} pages):'.format(size)
-    else:
-        new_entry += ':'
-    new_entry += '\t' + str(int(avg)) + ' faults.'
-    count = 0
-    for line in data:
-        if line.startswith(b.name) and s.name in line:
-            break
-        count += 1
-    data.insert(count, new_entry)
-    with open('benchmarks.txt', 'w') as record_file:
-        record_file.write('\n'.join(data))
+    with open('benchmarks.csv', 'r') as record_file:
+        data = DictReader(record_file)
+        entries = [i for i in data]
+    entry_fields = ['Behavior', 'Strategy', 'Res. Set Size', 'Faults']
+    new_entry = {'Behavior': b.name, 'Strategy': s.name, 'Res. Set Size': size, 'Faults': int(avg)}
+    entries.append(new_entry)
+    entries = sorted(entries, key=itemgetter('Behavior'))
+    with open('benchmarks.csv', 'w', newline='') as record_file:
+        writer = DictWriter(record_file, entry_fields)
+        writer.writeheader()
+        writer.writerows(entries)
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.AVERAGE, Strategy.LRU)
-
-
+    test_behavior_strategy(Behavior.RANDOM, Strategy.FIFO)
