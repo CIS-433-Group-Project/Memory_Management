@@ -1,0 +1,5 @@
+Filename,Behavior,Strategy,Faults
+average1.txt,AVERAGE,RANDOM,1586
+average1.txt,AVERAGE,FIFO,1556
+average1.txt,AVERAGE,LRU,891
+average1.txt,AVERAGE,OPTIMAL,640
