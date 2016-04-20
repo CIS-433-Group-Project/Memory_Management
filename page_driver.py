@@ -34,4 +34,4 @@ def test_behavior_strategy(b: Behavior, s: Strategy, size=20):
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.LOOP, Strategy.LRU)
+    test_behavior_strategy(Behavior.LOOP, Strategy.OPTIMAL)
