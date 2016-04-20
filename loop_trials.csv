@@ -1,0 +1,9 @@
+Filename,Behavior,Strategy,Faults,Loop Size
+loop1.txt,LOOP,RANDOM,3592,22
+loop1.txt,LOOP,FIFO,9263,22
+loop1.txt,LOOP,LRU,9279,22
+loop1.txt,LOOP,OPTIMAL,1991,22
+loop2.txt,LOOP,RANDOM,1606,18
+loop2.txt,LOOP,FIFO,1549,18
+loop2.txt,LOOP,LRU,1536,18
+loop2.txt,LOOP,OPTIMAL,928,18
