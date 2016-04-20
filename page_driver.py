@@ -26,7 +26,7 @@ def test_behavior_strategy(b: Behavior, s: Strategy, size=20):
     entry_fields = ['Behavior', 'Strategy', 'Res. Set Size', 'Faults']
     new_entry = {'Behavior': b.name, 'Strategy': s.name, 'Res. Set Size': size, 'Faults': int(avg)}
     entries.append(new_entry)
-    entries = sorted(entries, key=itemgetter('Behavior'))
+    entries = sorted(entries, key=itemgetter('Behavior', 'Strategy'))
     with open('benchmarks.csv', 'w', newline='') as record_file:
         writer = DictWriter(record_file, entry_fields)
         writer.writeheader()
@@ -34,4 +34,4 @@ def test_behavior_strategy(b: Behavior, s: Strategy, size=20):
 
 
 if __name__ == '__main__':
-    test_behavior_strategy(Behavior.LOOP, Strategy.OPTIMAL)
+    test_behavior_strategy(Behavior.RANDOM, Strategy.OPTIMAL, size=10)
