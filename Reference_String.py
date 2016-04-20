@@ -39,24 +39,32 @@ def generate_list(behavior: Behavior, loop_len=None):
             app(c)
     # Implementation of average program behavior.  Assumes average programs simply adhere to the 90-10 rule.
     elif behavior == Behavior.AVERAGE:
-        ref = [None]*LENGTH
+        ref = []
+        append = ref.append
         ws = range(RANGE+1)
         working_set = []
         while len(working_set) < 10:
             working_set = {choice(ws) for _ in range(len(ws)//10)}
         working_set = list(working_set)
         leftovers = [i for i in ws if i not in working_set]
-        ref[0] = choice(leftovers)
-        for i in range(1, len(ref)):
+        append(choice(leftovers))
+        last = ref[0]
+        c = last
+        for _ in range(1, LENGTH):
             placement = random()
-            before = ref[i - 1]
+            # Pulls from the "common" 10% if the random value above was <= 0.9; pulls from the "leftovers" otherwise.
+            # Guarantees the 90/10 rule for reasonably uniform random distributions.
             if placement > 0.9:
-                choices = leftovers.copy()
+                while c == last:
+                    c = choice(leftovers)
             else:
-                choices = working_set.copy()
-            if before in choices:
-                choices.remove(before)
-            ref[i] = choice(choices)
+                while c == last:
+                    c = choice(working_set)
+            append(c)
+            last = c
+        # this is just checking to make sure we've gotten roughly 90% usage of our "common" pages.  The dict tallying
+        # method here is slightly inefficient, but it preserves how commonly each page was used, which was useful during
+        # testing.
         uses = {i: sum([1 if i == j else 0 for j in ref]) for i in working_set}
         ninety = len(ref)*9/10
         ten = len(ref)/10
